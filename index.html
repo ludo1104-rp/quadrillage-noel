@@ -325,6 +325,13 @@ body.simple .foot{font-family:var(--mono);letter-spacing:.02em}
 body.simple .t-arr{background:#E1F0E6}
 .marque{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);left:18px;height:56px;display:flex;align-items:center;margin:0;z-index:20;font-family:"Figtree","Avenir Next",Arial,sans-serif;font-size:26px;font-weight:600;letter-spacing:-.04em;line-height:1;color:var(--ink);pointer-events:none}
 </style>
+<style>
+/* Bouton « Accueil du stand » : visible seulement quand l'appli est ouverte depuis la page du stand */
+.retour-stand{position:fixed;z-index:9999;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px 8px 12px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid #dcdcdc;color:#0a0a0a;font:600 15px/1 "Figtree","Avenir Next",Arial,sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(10,10,10,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.retour-stand[hidden]{display:none}
+.retour-stand svg{flex:none}
+html.stand [data-start="2"]{display:none!important}
+</style>
 </head>
 <body>
 
@@ -352,7 +359,7 @@ body.simple .t-arr{background:#E1F0E6}
     <button class="btn sec" id="rulesBtn">Comment jouer ?</button>
   </div>
   <div class="foot">
-    Version 1.0<br>
+    Version 1.1<br>
     Application produite par IA à partir d'un document Internet. Des erreurs peuvent survenir.<br>
     Application développée par Claude AI sous la supervision de Ludo<b style="font-weight:700;font-size:1.35em;line-height:0">.</b> (@rprof_1) · <a href="https://rprof1.com" target="_blank" rel="noopener" style="color:inherit">rprof1.com</a>.<br>
     Licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener" style="color:inherit">CC BY-NC-SA 4.0</a>
@@ -1094,6 +1101,12 @@ function ouverture(){
   setTimeout(fermer,1400);
 }
 ouverture();
+</script>
+<a class="retour-stand" id="retour-stand" href="https://ludo1104-rp.github.io/startechdays-2026/" hidden><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7M6 10v9h12v-9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Accueil du stand</a>
+<script>
+/* Ouverte depuis le stand des StarTechs Days (« ?stand » dans l'adresse) : bouton de retour, et réglages du stand. */
+(function(){var s=false;try{s=/[?&]stand(=|&|$)/.test(location.search);if(s)sessionStorage.setItem("stand","1");else s=sessionStorage.getItem("stand")==="1";}catch(e){}
+if(!s)return;document.documentElement.classList.add("stand");var a=document.getElementById("retour-stand");if(a)a.hidden=false;})();
 </script>
 </body>
 </html>
