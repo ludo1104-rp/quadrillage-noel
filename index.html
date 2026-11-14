@@ -77,21 +77,14 @@ h1{font-weight:normal;font-size:clamp(1.8rem,4.2vw,2.7rem);margin:0}
 .pot{width:100%;height:100%;transform-origin:50% 85%}
 .pot svg{width:100%;height:100%;display:block;overflow:visible}
 .pot *{transform-box:fill-box}
-.pot .flame{transform-origin:50% 100%;animation:flick .9s ease-in-out infinite alternate}
-.pot .f2{animation-delay:.3s;animation-duration:.7s}.pot .f3{animation-delay:.15s;animation-duration:1.05s}
-@keyframes flick{0%{transform:scaleY(.82) scaleX(1.05)}100%{transform:scaleY(1.12) scaleX(.95)}}
-.pot .bb{transform-origin:50% 50%;opacity:0;animation:bb 2.4s ease-in infinite}
-.pot .bb2{animation-delay:.6s}.pot .bb3{animation-delay:1.2s}.pot .bb4{animation-delay:1.8s}
-@keyframes bb{0%{opacity:0;transform:translateY(0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(-34px) scale(1.2)}}
-.pot .steam{opacity:0;animation:steam 3.2s ease-out infinite}
-.pot .st2{animation-delay:1.6s}
-@keyframes steam{0%{opacity:0;transform:translateY(8px)}40%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
-.pot .liquid{transform-origin:50% 50%;animation:slosh 2s ease-in-out infinite alternate}
-@keyframes slosh{0%{transform:scaleX(.97)}100%{transform:scaleX(1.03)}}
+.pot .tw{transform-origin:50% 50%;opacity:0;animation:tw 2.4s ease-in-out infinite}
+.pot .tw1{animation-delay:.6s}.pot .tw2{animation-delay:1.2s}.pot .tw3{animation-delay:1.8s}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1) rotate(20deg)}}
+.pot .sack,.pot .sack *{transform-box:view-box}
 .pot.stir{animation:stir .9s ease}
-.pot.stir .bb{animation-duration:.45s}
-.pot.stir .liquid{animation:glow .9s ease}
-@keyframes glow{50%{fill:#E58A93;transform:scaleX(1.06)}}
+.pot.stir .tw{animation-duration:.45s}
+.pot.stir .gifts{animation:hop .9s ease}
+@keyframes hop{20%,60%{transform:translateY(-14px)}40%,80%{transform:translateY(0)}}
 @keyframes stir{15%{transform:rotate(-8deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-6deg)}60%{transform:rotate(6deg)}75%{transform:rotate(-3deg)}90%{transform:rotate(2deg)}}
 .numov{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:35;background:rgba(40,35,60,.18);pointer-events:none}
 .numov.on{display:flex}
@@ -359,7 +352,7 @@ html.stand [data-start="2"]{display:none!important}
     <button class="btn sec" id="rulesBtn">Comment jouer ?</button>
   </div>
   <div class="foot">
-    Version 1.1<br>
+    Version 1.2<br>
     Application produite par IA à partir d'un document Internet. Des erreurs peuvent survenir.<br>
     Application développée par Claude AI sous la supervision de Ludo<b style="font-weight:700;font-size:1.35em;line-height:0">.</b> (@rprof_1) · <a href="https://rprof1.com" target="_blank" rel="noopener" style="color:inherit">rprof1.com</a>.<br>
     Licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener" style="color:inherit">CC BY-NC-SA 4.0</a>
@@ -444,7 +437,7 @@ const ICONS={
  berger:'<circle cx="20" cy="20" r="16" fill="#DCEBFA"/><path d="M20 3l3 14 14 3-14 3-3 14-3-14-14-3 14-3z" fill="#F5D778"/><circle cx="20" cy="20" r="2.6" fill="#FFF1BF"/>',
  sucre:'<path d="M14 36V15a6.5 6.5 0 0 1 13 0" fill="none" stroke="#E3B7BE" stroke-width="9" stroke-linecap="round"/><path d="M14 36V15a6.5 6.5 0 0 1 13 0" fill="none" stroke="#FFFFFF" stroke-width="6.4" stroke-linecap="round"/><path d="M14 36V15a6.5 6.5 0 0 1 13 0" fill="none" stroke="#E06B6B" stroke-width="6.4" stroke-dasharray="3 4.4" stroke-dashoffset="-1"/>',
  cadeau:'<rect x="7" y="18" width="26" height="16" rx="3" fill="#7DBE96"/><rect x="5" y="14" width="30" height="7" rx="3" fill="#6FB48A"/><rect x="18" y="14" width="4" height="20" fill="#E06B6B"/><path d="M20 14c-2-7-10-9-10-4 0 3 6 4 10 4zM20 14c2-7 10-9 10-4 0 3-6 4-10 4z" fill="#E06B6B"/>',
- hotte:'<rect x="11" y="3" width="9" height="10" rx="1.6" fill="#7DBE96"/><path d="M15.5 3v10" stroke="#F5D778" stroke-width="2"/><rect x="21" y="5.5" width="8" height="8" rx="1.6" fill="#F5D778"/><path d="M25 5.5v8" stroke="#E06B6B" stroke-width="2"/><path d="M8 15h24l-1.6 17a3 3 0 0 1-3 3H12.6a3 3 0 0 1-3-3z" fill="#E06B6B"/><rect x="6" y="11" width="28" height="7" rx="3.5" fill="#FFFFFF" stroke="#BFD0EA" stroke-width="1.4"/><path d="M9.5 26q10.5 3 21 0" stroke="#F5D778" stroke-width="3" fill="none" stroke-linecap="round"/>',
+ hotte:'<path d="M15 6h10v10H15z" fill="#7FB36E"/><path d="M20 6v10" stroke="#F5D27A" stroke-width="2.4"/><path d="M14 17 L10 13 Q13 10.5 16 12.5 Q20 9.5 24 12.5 Q27 10.5 30 13 L26 17Z" fill="#D95F62"/><path d="M14 17 C7 19 4 26 5.5 31 C7 35 12 36 20 36 C28 36 33 35 34.5 31 C36 26 33 19 26 17Z" fill="#D95F62"/><path d="M20.0 22.5 L21.3 25.7 L24.8 26.0 L22.1 28.2 L22.9 31.5 L20.0 29.7 L17.1 31.5 L17.9 28.2 L15.2 26.0 L18.7 25.7Z" fill="#F5D27A"/><rect x="12.5" y="15" width="15" height="3.4" rx="1.7" fill="#E8C15A"/>',
  lutin:'<path d="M10 19 14 9C16 5 21 3 28 4 24 7 25 13 30 19z" fill="#6FB48A"/><rect x="9" y="17" width="22" height="4" rx="2" fill="#E06B6B"/><circle cx="28.5" cy="4.5" r="3" fill="#FFFFFF" stroke="#BFD0EA" stroke-width="1.2"/><circle cx="20" cy="28" r="8.5" fill="#FBD9C0"/><ellipse cx="10.8" cy="26.5" rx="2.2" ry="3" fill="#FBD9C0"/><ellipse cx="29.2" cy="26.5" rx="2.2" ry="3" fill="#FBD9C0"/><circle cx="16.8" cy="27" r="1.2" fill="#4E4866"/><circle cx="23.2" cy="27" r="1.2" fill="#4E4866"/><circle cx="14.8" cy="30.2" r="1.8" fill="#F4B6C2"/><circle cx="25.2" cy="30.2" r="1.8" fill="#F4B6C2"/><path d="M17.5 31q2.5 2.4 5 0" stroke="#4E4866" stroke-width="1.4" fill="none" stroke-linecap="round"/>',
  sapin:'<rect x="17.5" y="30" width="5" height="6" rx="1.5" fill="#B98A5E"/><path d="M20 6 28.5 17.5H24L31 27.5H9L16 17.5H11.5Z" fill="#7DBE96" stroke="#7DBE96" stroke-width="3" stroke-linejoin="round"/><circle cx="17" cy="22" r="1.6" fill="#E06B6B"/><circle cx="24" cy="24.5" r="1.6" fill="#F5D778"/><circle cx="20" cy="15" r="1.4" fill="#F5D778"/>',
  flocon:'<g stroke="#8DB9E8" stroke-width="2.6" stroke-linecap="round" fill="none"><path d="M20 5v30M7 12.5l26 15M7 27.5l26-15"/><path d="M16.5 7.5 20 11l3.5-3.5M16.5 32.5 20 29l3.5 3.5M8.5 17.5l4.5 1.2-1.2 4.5M31.5 22.5l-4.5-1.2 1.2-4.5M8.5 22.5l4.5-1.2-1.2-4.5M31.5 17.5l-4.5 1.2 1.2 4.5"/></g>',
@@ -739,24 +732,34 @@ function updateBoard(){
   placeBoardPions();
 }
 const MAXSTEP=3;
-const POT=`<svg viewBox="0 0 120 125" aria-hidden="true">
- <path class="steam" d="M48 30c-5-6 5-10 0-17" fill="none" stroke="#CFE0F3" stroke-width="3" stroke-linecap="round"/>
- <path class="steam st2" d="M70 28c-5-6 5-10 0-17" fill="none" stroke="#CFE0F3" stroke-width="3" stroke-linecap="round"/>
- <path d="M14 46h92c0 32-18 50-46 50S14 78 14 46z" fill="#E06B6B"/>
- <path d="M22 72q38 12 76 0" stroke="#F5D778" stroke-width="7" fill="none" stroke-linecap="round"/>
- <ellipse cx="60" cy="46" rx="47" ry="11" fill="#FFFFFF" stroke="#BFD0EA" stroke-width="2"/>
- <ellipse class="liquid" cx="60" cy="46" rx="39" ry="7" fill="#B84E5A"/>
- <rect x="38" y="22" width="21" height="25" rx="4" fill="#7DBE96"/>
- <path d="M48.5 22v25" stroke="#F5D778" stroke-width="5"/>
- <rect x="62" y="30" width="19" height="17" rx="4" fill="#F5D778"/>
- <path d="M71.5 30v17" stroke="#E06B6B" stroke-width="4.5"/>
- <circle class="bb" cx="46" cy="45" r="4" fill="#FFF3C9"/>
- <circle class="bb bb2" cx="66" cy="44" r="3" fill="#FFFFFF"/>
- <circle class="bb bb3" cx="56" cy="46" r="5" fill="#FFF3C9"/>
- <circle class="bb bb4" cx="76" cy="46" r="3.5" fill="#FFFFFF"/>
- <path class="flame" d="M46 123c-6 0-8-3-6-6 2-2 4-4 6-9 2 5 4 7 6 9 2 3 0 6-6 6z" fill="#F5D778"/>
- <path class="flame f2" d="M60 123c-7 0-9-3-7-6 2-2 5-5 7-11 2 6 5 9 7 11 2 3 0 6-7 6z" fill="#F7C873"/>
- <path class="flame f3" d="M74 123c-6 0-8-3-6-6 2-2 4-4 6-9 2 5 4 7 6 9 2 3 0 6-6 6z" fill="#F5D778"/>
+const POT=`<svg viewBox="0 0 300 280" aria-hidden="true">
+ <ellipse cx="150" cy="262" rx="104" ry="12" fill="#FFFFFF" stroke="#D5DEE7" stroke-width="2"/>
+    <g class="sack">
+    <g transform="translate(0 -26)">
+    <g class="gifts">
+    <g transform="rotate(-14 112 84)"><rect x="86" y="50" width="50" height="54" rx="6" fill="#7FB36E"/><rect x="107" y="50" width="8" height="54" fill="#F5D27A"/></g>
+    <g transform="rotate(12 190 82)"><rect x="166" y="52" width="48" height="50" rx="6" fill="#9FC3E8"/><rect x="186" y="52" width="8" height="50" fill="#F5D27A"/></g>
+    <path d="M150 52 q-22 -26 -30 -8 q6 14 30 8z M150 52 q22 -26 30 -8 q-6 14 -30 8z" fill="#F5D27A"/><rect x="128" y="50" width="44" height="50" rx="6" fill="#F6CDD6"/><rect x="146" y="50" width="8" height="50" fill="#F5D27A"/>
+    </g>
+    <path d="M124 122 L94 96 Q104 86 116 94 Q126 82 138 92 Q150 80 162 92 Q174 82 184 94 Q196 86 206 96 L176 122Z" fill="#D95F62"/>
+    <path d="M100 98 Q110 92 118 98 M138 95 Q150 88 162 95 M182 98 Q190 92 200 98" stroke="#B8474D" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/>
+    </g>
+    <path d="M122 96 C62 108 38 168 46 214 C52 250 94 260 150 260 C206 260 248 250 254 214 C262 168 238 108 178 96Z" fill="#D95F62"/>
+    <path d="M134 106 Q104 160 98 248 M166 106 Q196 160 202 248" stroke="#B8474D" stroke-width="4" fill="none" stroke-linecap="round" opacity=".45"/>
+    <path d="M78 150 Q66 172 70 196" stroke="#FFFFFF" stroke-width="12" fill="none" stroke-linecap="round" opacity=".25"/>
+    <circle cx="150" cy="186" r="32" fill="#F6CFCF" stroke="#FFFFFF" stroke-width="4"/>
+    <path d="M150.0 167.0 L155.0 180.1 L169.0 180.8 L158.1 189.6 L161.8 203.2 L150.0 195.5 L138.2 203.2 L141.9 189.6 L131.0 180.8 L145.0 180.1Z" fill="#E8C15A" stroke="#E8C15A" stroke-width="3" stroke-linejoin="round"/>
+    <g transform="translate(0 -26)">
+    <path d="M116 114 Q150 128 184 114 L186 126 Q150 142 114 126Z" fill="#E8C15A"/>
+    <path d="M150 124 q-30 -20 -32 0 q2 14 32 0z M150 124 q30 -20 32 0 q-2 14 -32 0z" fill="#F5D27A" stroke="#E8C15A" stroke-width="2"/>
+    <path d="M146 128 q-8 18 -18 26 M154 128 q8 18 18 26" stroke="#E8C15A" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="150" cy="125" r="8" fill="#E8C15A"/>
+    </g>
+    </g>
+ <path class="tw tw0" d="M70.0 37.0 L71.8 43.6 L78.6 43.2 L72.9 46.9 L75.3 53.3 L70.0 49.0 L64.7 53.3 L67.1 46.9 L61.4 43.2 L68.2 43.6Z" fill="#F5D27A"/>
+ <path class="tw tw1" d="M232.0 31.0 L233.8 37.6 L240.6 37.2 L234.9 40.9 L237.3 47.3 L232.0 43.0 L226.7 47.3 L229.1 40.9 L223.4 37.2 L230.2 37.6Z" fill="#FFFFFF"/>
+ <path class="tw tw2" d="M250.0 131.0 L251.8 137.6 L258.6 137.2 L252.9 140.9 L255.3 147.3 L250.0 143.0 L244.7 147.3 L247.1 140.9 L241.4 137.2 L248.2 137.6Z" fill="#F5D27A"/>
+ <path class="tw tw3" d="M52.0 121.0 L53.8 127.6 L60.6 127.2 L54.9 130.9 L57.3 137.3 L52.0 133.0 L46.7 137.3 L49.1 130.9 L43.4 127.2 L50.2 127.6Z" fill="#FFFFFF"/>
 </svg>`;
 function setNum(v){$('#nBig').textContent=v;$('#nCap').textContent=v>1?'cases':'case';$('#nDots').innerHTML='<span class="ndot"></span>'.repeat(v);}
 async function roll(){
